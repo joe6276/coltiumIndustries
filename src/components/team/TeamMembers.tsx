@@ -1,5 +1,4 @@
 "use client"
-
 import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -14,24 +13,24 @@ import {
 import { Button } from '@/components/ui/button'
 
 const teamMembers = [
-  {
-    id: 'frank',
-    name: 'Frank Otieno Ouma',
-    role: 'Founder & CEO',
-    image: '/images/frank.png',
-    bio: 'Leads innovation and R&D. Specialist in embedded systems, AI, chip design, and advanced product engineering.',
-    expertise: [
-      'Embedded Systems Architecture',
-      'AI/ML Implementation',
-      'Semiconductor Design',
-      'Product Development Strategy'
-    ],
-    contact: {
-      email: 'frank@intl-coltium.com',
-      linkedin: 'https://www.linkedin.com/in/frank-otieno-1a7044137'
-    },
-    icon: <Cpu className="h-6 w-6" />
-  },
+  // {
+  //   id: 'frank',
+  //   name: 'Frank Otieno Ouma',
+  //   role: 'Founder & CEO',
+  //   image: '/images/frank.png',
+  //   bio: 'Leads innovation and R&D. Specialist in embedded systems, AI, chip design, and advanced product engineering.',
+  //   expertise: [
+  //     'Embedded Systems Architecture',
+  //     'AI/ML Implementation',
+  //     'Semiconductor Design',
+  //     'Product Development Strategy'
+  //   ],
+  //   contact: {
+  //     email: 'frank@intl-coltium.com',
+  //     linkedin: 'https://www.linkedin.com/in/frank-otieno-1a7044137'
+  //   },
+  //   icon: <Cpu className="h-6 w-6" />
+  // },
   {
     id: 'samwel',
     name: 'Samwel Njenga',
@@ -69,7 +68,8 @@ const TeamMembers = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Modified grid with justify-center to center single item */}
+        <div className="flex flex-wrap justify-center gap-12">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.id}
@@ -77,16 +77,14 @@ const TeamMembers = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-white rounded-lg shadow-md overflow-hidden max-w-md mx-auto"
             >
               <div className="relative h-80 w-full">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
-                  style={{ objectFit: 'contain' 
-                    
-                  }}
+                  style={{ objectFit: 'contain' }}
                   className="transition-transform duration-500 hover:scale-105"
                 />
               </div>
