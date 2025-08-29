@@ -43,7 +43,7 @@ import {
 
 export const API_BASE_URL = 'https://coltiumbackend-h7gtaphsdwg0djgm.canadacentral-01.azurewebsites.net'
 export const MPESA_API_BASE_URL = 'https://coltiummpesa-avfca5fhahg9fwah.canadacentral-01.azurewebsites.net'
-export const TOKENIZATION_API_URL = 'https://thetokenizer.onrender.com'
+export const TOKENIZATION_API_URL = 'https://thetokenizer-2.onrender.com'
 
 export const API_ENDPOINTS = {
   // Auth
