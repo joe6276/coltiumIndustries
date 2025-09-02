@@ -207,7 +207,15 @@ const Footer = () => {
                   href="/client"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Payment Dashboard
+                  CDPES
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/marketplace"
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Marketplace
                 </Link>
               </li>
             </ul>

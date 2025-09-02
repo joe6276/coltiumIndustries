@@ -1,9 +1,7 @@
 "use client"
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
 import { ArrowRight, Layers } from 'lucide-react'
 
 const Hero = () => {
@@ -115,52 +113,6 @@ const Hero = () => {
             </motion.div>
           </motion.div>
           
-          {/* Image on the right */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-            className="hidden lg:block relative"
-          >
-            <div className="relative h-[500px] w-full">
-              <div className="absolute inset-0 bg-blue-400/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-xl">
-                <div className="absolute inset-4 rounded-xl overflow-hidden">
-                  <Image
-                    src="/images/background.png" 
-                    alt="Advanced technology solutions"
-                    fill
-                    className="object-cover rounded-xl"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
-                </div>
-              </div>
-              
-              {/* Decorative elements */}
-              <motion.div 
-                className="absolute -right-12 -bottom-8 w-40 h-40 rounded-full border-4 border-blue-300/20 z-10"
-                animate={{
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-              <motion.div 
-                className="absolute -left-10 -top-10 w-32 h-32 rounded-full border-4 border-blue-300/20 z-10"
-                animate={{
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              />
-            </div>
-          </motion.div>
         </div>
       </div>
       
