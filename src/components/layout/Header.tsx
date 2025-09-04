@@ -14,7 +14,7 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState("/");
   const [hoveredItem, setHoveredItem] = useState(null);
 
-  // Navigation items with dropdown menus
+  // Navigation items with dropdown menus including CDPES
   const navItems = [
     { title: "About Us", href: "/about" },
     { 
@@ -30,6 +30,11 @@ const Header = () => {
       ]
     },
     { title: "Projects", href: "/projects" },
+    { 
+      title: "CDPES", 
+      href: "/cdpes",
+     
+    },
     { title: "Partners", href: "/partners" },
     { title: "Team", href: "/team" }
   ];
@@ -88,6 +93,8 @@ const Header = () => {
                         activeLink === item.href 
                           ? "text-primary" 
                           : "text-gray-700 hover:text-primary",
+                        // Special styling for CDPES
+                        item.title === "CDPES" && "text-blue-600 font-semibold hover:text-blue-700",
                         "relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
                       )}
                     >
@@ -106,7 +113,11 @@ const Header = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -5 }}
                           transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg overflow-hidden min-w-[200px] z-20"
+                          className={cn(
+                            "absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg overflow-hidden min-w-[200px] z-20",
+                            // Special border for CDPES dropdown
+                            item.title === "CDPES" && "border-t-2 border-blue-500"
+                          )}
                         >
                           <div className="py-1">
                             {item.dropdown.map((dropdownItem, idx) => (
@@ -141,7 +152,7 @@ const Header = () => {
             ))}
           </nav>
           
-          <Button asChild className="bg-primary hover:bg-primary/90 text-white text-md  rounded-md px-7 py-5 transition-colors">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-white text-md rounded-md px-7 py-5 transition-colors">
             <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
@@ -178,13 +189,18 @@ const Header = () => {
                           activeLink === item.href
                             ? "text-primary" 
                             : "text-gray-700 hover:text-primary",
+                          // Special styling for CDPES in mobile
+                          item.title === "CDPES" && "text-blue-600 font-semibold",
                           "relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item.title}
                       </Link>
-                      <div className="pl-4 space-y-2 border-l-2 border-primary/20 mt-2">
+                      <div className={cn(
+                        "pl-4 space-y-2 border-l-2 mt-2",
+                        item.title === "CDPES" ? "border-blue-500/50" : "border-primary/20"
+                      )}>
                         {item.dropdown.map((dropdownItem, idx) => (
                           <Link
                             key={idx}
