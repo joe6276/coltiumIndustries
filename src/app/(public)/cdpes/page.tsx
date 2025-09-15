@@ -23,6 +23,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import Image from "next/image";
+import Link from 'next/link';
 
 const CDPESLandingPage = () => {
   const coreProcesses = [
@@ -126,7 +127,7 @@ const CDPESLandingPage = () => {
             <div className="text-center lg:text-left">
               {/* Badge */}
               <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 mb-8">
-                <Sparkles className="h-5 w-5 text-blue-600 mr-2" />
+                <TrendingUp className="h-5 w-5 text-blue-600 mr-2" />
                 <span className="text-slate-800 text-sm font-semibold tracking-wide">Coltium Digital Project Equity System</span>
               </div>
 
@@ -162,40 +163,25 @@ const CDPESLandingPage = () => {
 
               {/* CTA Button */}
               <div className="flex justify-center lg:justify-start">
-                <button className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-5 rounded-xl font-semibold text-lg flex items-center justify-center transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                  Start Creating Digital Assets
-                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <Link href="/login">
+                  <button className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-5 rounded-xl font-semibold text-lg flex items-center justify-center transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                    Start Creating Digital Assets
+                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </Link>
+
+              <Link href="/marketplace">
+                <button className="ml-2 border border-blue-300 text-blue-600 hover:bg-blue-100 px-10 py-5 rounded-xl font-semibold text-lg transition-all duration-300">
+                   Visit Marketplace
+                  
                 </button>
+              </Link>
               </div>
             </div>
 
             {/* Right Column - Hero Image */}
             <div className="relative hidden lg:block">
-              <div className="relative w-full">
-                {/* Decorative shapes */}
-                <Image
-                  src="/images/shape/shape-01.png"
-                  alt="Decorative shape"
-                  width={46}
-                  height={246}
-                  className="absolute -left-11.5 top-0 z-0"
-                />
-                <Image
-                  src="/images/shape/shape-02.svg"
-                  alt="Decorative shape"
-                  width={36.9}
-                  height={36.7}
-                  className="absolute bottom-0 right-0 z-10"
-                />
-                <Image
-                  src="/images/shape/shape-03.svg"
-                  alt="Decorative shape"
-                  width={21.64}
-                  height={21.66}
-                  className="absolute -right-6.5 bottom-0 z-1"
-                />
-                
-                {/* Main hero image */}
+              {/* Main hero image */}
                 <div className="relative aspect-[700/444] w-full max-w-2xl mx-auto">
                   <Image
                     className="shadow-2xl"
@@ -206,7 +192,6 @@ const CDPESLandingPage = () => {
                     priority
                   />
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -446,13 +431,17 @@ const CDPESLandingPage = () => {
               Turn your project work into valuable, tradeable digital equity.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/login">
               <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
+              </Link>
+              <Link href="/contact">
               <button className="border border-blue-300 text-blue-100 hover:bg-blue-500/10 px-8 py-4 rounded-lg font-semibold transition-all duration-300">
                 Contact Our Team
               </button>
+              </Link>
             </div>
           </div>
         </div>
