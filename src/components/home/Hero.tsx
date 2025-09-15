@@ -6,7 +6,7 @@ import { ArrowRight, Layers } from 'lucide-react'
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
+    <section className="relative min-h-[600px] lg:min-h-[700px] flex  bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 

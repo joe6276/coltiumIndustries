@@ -1,3 +1,4 @@
+// src/components/cdpes/CdpesHero.tsx
 import { motion } from 'framer-motion'
 import React from 'react'
 import { Badge } from '../ui/badge'
@@ -5,8 +6,6 @@ import { Badge } from '../ui/badge'
 const CdpesHero = () => {
   return (
     <div className="relative bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 overflow-hidden">
-      {/* Background Elements */}
-      {/* <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" /> */}
       
       {/* Floating Elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl" />
