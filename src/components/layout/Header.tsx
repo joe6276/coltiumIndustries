@@ -30,10 +30,14 @@ const Header = () => {
       ]
     },
     { title: "Projects", href: "/projects" },
-    { 
-      title: "CDPES", 
+    {
+      title: "CDPES",
       href: "/cdpes",
-     
+
+    },
+    {
+      title: "AECA",
+      href: "/aeca",
     },
     { title: "Partners", href: "/partners" },
     { title: "Team", href: "/team" }
@@ -90,11 +94,13 @@ const Header = () => {
                       href={item.href}
                       className={cn(
                         "px-4 py-2 text-md font-medium flex items-center gap-1 transition-colors",
-                        activeLink === item.href 
-                          ? "text-primary" 
+                        activeLink === item.href
+                          ? "text-primary"
                           : "text-gray-700 hover:text-primary",
                         // Special styling for CDPES
                         item.title === "CDPES" && "text-blue-600 font-semibold hover:text-blue-700",
+                        // Special styling for AECA
+                        item.title === "AECA" && "text-green-600 font-semibold hover:text-green-700",
                         "relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
                       )}
                     >
@@ -187,10 +193,12 @@ const Header = () => {
                         className={cn(
                           "block font-medium transition-colors",
                           activeLink === item.href
-                            ? "text-primary" 
+                            ? "text-primary"
                             : "text-gray-700 hover:text-primary",
                           // Special styling for CDPES in mobile
                           item.title === "CDPES" && "text-blue-600 font-semibold",
+                          // Special styling for AECA in mobile
+                          item.title === "AECA" && "text-green-600 font-semibold",
                           "relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
