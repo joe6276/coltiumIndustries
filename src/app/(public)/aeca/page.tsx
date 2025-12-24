@@ -189,16 +189,16 @@ const AECALandingPage = () => {
 
               {/* CTA */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/contact">
+                <a href="https://teal-kringle-864aee.netlify.app/" target="_blank" rel="noopener noreferrer">
                   <button className="group bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40">
                     <Play className="mr-2 h-5 w-5" />
-                    Request Live Demo
+                    View Live Demo
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </Link>
+                </a>
                 <Link href="/contact">
                   <button className="border border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 px-8 py-4 rounded-lg font-semibold transition-all duration-300">
-                    Talk to Engineering Team
+                    Contact Our Team
                   </button>
                 </Link>
               </div>
@@ -497,16 +497,16 @@ const AECALandingPage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <a href="https://teal-kringle-864aee.netlify.app/" target="_blank" rel="noopener noreferrer">
               <button className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40">
                 <Terminal className="mr-2 h-5 w-5" />
-                Schedule Technical Demo
+                View Live Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </button>
-            </Link>
+            </a>
             <Link href="/contact">
               <button className="border-2 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 px-8 py-4 rounded-lg font-semibold transition-all duration-300">
-                Talk to Engineering Team
+                Contact Our Team
               </button>
             </Link>
           </div>
