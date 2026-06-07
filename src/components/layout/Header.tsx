@@ -1,8 +1,9 @@
-//src/components/layout/Header.tsx
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,11 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
   const [hoveredItem, setHoveredItem] = useState(null);
+
+  const pathname = usePathname();
+  const isFullyDarkPage = pathname === "/aeca";
+  const hasDarkHero = pathname === "/";
+  const isHeaderDark = isScrolled ? isFullyDarkPage : (isFullyDarkPage || hasDarkHero);
 
   // Navigation items with dropdown menus including CDPES
   const navItems = [
@@ -58,12 +64,7 @@ const Header = () => {
 
   return (
     <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-md" 
-          : "bg-transparent"
-      )}
+      className="sticky top-0 z-50 w-full transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 text-gray-900"
     >
       <div 
         className={cn(
@@ -101,15 +102,15 @@ const Header = () => {
                     <Link 
                       href={item.href}
                       className={cn(
-                        "px-4 py-2 text-md font-medium flex items-center gap-1 transition-colors",
-                        activeLink === item.href
-                          ? "text-primary"
-                          : "text-gray-700 hover:text-primary",
-                        // Special styling for CDPES
-                        item.title === "CDPES" && "text-blue-600 font-semibold hover:text-blue-700",
-                        // Special styling for AECA
-                        item.title === "AECA" && "text-green-600 font-semibold hover:text-green-700",
-                        "relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                        "px-4 py-2 text-md font-medium flex items-center gap-1 transition-colors relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform",
+                        // Product page custom styling
+                        item.title === "CDPES" 
+                          ? "text-blue-600 font-semibold hover:text-blue-700 after:bg-blue-600" 
+                          : item.title === "AECA" 
+                            ? "text-emerald-600 font-semibold hover:text-emerald-700 after:bg-emerald-600"
+                            : activeLink === item.href
+                              ? "text-primary font-semibold after:bg-primary after:scale-x-100"
+                              : "text-gray-700 hover:text-primary after:bg-primary"
                       )}
                     >
                       {item.title}
@@ -128,9 +129,9 @@ const Header = () => {
                           exit={{ opacity: 0, y: -5 }}
                           transition={{ duration: 0.2 }}
                           className={cn(
-                            "absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg overflow-hidden min-w-[200px] z-20",
-                            // Special border for CDPES dropdown
-                            item.title === "CDPES" && "border-t-2 border-blue-500"
+                            "absolute top-full left-0 mt-1 rounded-md shadow-lg overflow-hidden min-w-[200px] z-20 border bg-white border-gray-100 text-gray-900",
+                            item.title === "CDPES" && "border-t-2 border-blue-500",
+                            item.title === "AECA" && "border-t-2 border-emerald-500"
                           )}
                         >
                           <div className="py-1">
@@ -138,7 +139,7 @@ const Header = () => {
                               <Link
                                 key={idx}
                                 href={dropdownItem.href}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                                className="block px-4 py-2 text-sm relative transition-colors text-gray-700 hover:bg-primary/5 hover:text-primary"
                               >
                                 {dropdownItem.title}
                               </Link>
@@ -152,11 +153,10 @@ const Header = () => {
                   <Link
                     href={item.href}
                     className={cn(
-                      "px-4 py-2 text-md font-medium transition-colors",
+                      "px-4 py-2 text-md font-medium transition-colors relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform",
                       activeLink === item.href
-                        ? "text-primary" 
-                        : "text-gray-700 hover:text-primary",
-                      "relative after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                        ? "text-primary font-semibold after:bg-primary after:scale-x-100"
+                        : "text-gray-700 hover:text-primary after:bg-primary"
                     )}
                   >
                     {item.title}
@@ -166,14 +166,17 @@ const Header = () => {
             ))}
           </nav>
           
-          <Button asChild className="bg-primary hover:bg-primary/90 text-white text-md rounded-md px-7 py-5 transition-colors">
+          <Button 
+            asChild 
+            className="text-md rounded-md px-7 py-5 transition-all duration-300 bg-primary hover:bg-primary/90 text-white"
+          >
             <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden p-2 rounded-md hover:bg-primary/5 text-primary transition-colors"
+          className="lg:hidden p-2 rounded-md transition-colors hover:bg-primary/5 text-primary"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle Menu"
         >
@@ -189,7 +192,7 @@ const Header = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white border-t border-gray-100 shadow-lg"
+            className="lg:hidden border-t shadow-lg bg-white border-gray-100 text-gray-900"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col">
               {navItems.map((item, index) => (
@@ -199,29 +202,25 @@ const Header = () => {
                       <Link 
                         href={item.href}
                         className={cn(
-                          "block font-medium transition-colors",
-                          activeLink === item.href
-                            ? "text-primary"
-                            : "text-gray-700 hover:text-primary",
-                          // Special styling for CDPES in mobile
-                          item.title === "CDPES" && "text-blue-600 font-semibold",
-                          // Special styling for AECA in mobile
-                          item.title === "AECA" && "text-green-600 font-semibold",
-                          "relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                          "block font-medium transition-colors relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform",
+                          item.title === "CDPES" 
+                            ? "text-blue-600 font-semibold after:bg-blue-600" 
+                            : item.title === "AECA" 
+                              ? "text-emerald-600 font-semibold after:bg-emerald-600"
+                              : activeLink === item.href
+                                ? "text-primary font-semibold after:bg-primary after:scale-x-100"
+                                : "text-gray-700 hover:text-primary after:bg-primary"
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item.title}
                       </Link>
-                      <div className={cn(
-                        "pl-4 space-y-2 border-l-2 mt-2",
-                        item.title === "CDPES" ? "border-blue-500/50" : "border-primary/20"
-                      )}>
+                      <div className="pl-4 space-y-2 border-l-2 mt-2 border-primary/20">
                         {item.dropdown.map((dropdownItem, idx) => (
                           <Link
                             key={idx}
                             href={dropdownItem.href}
-                            className="block text-gray-700 hover:text-primary py-1 font-medium text-sm transition-colors relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                            className="block py-1 font-medium text-sm transition-colors relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform text-gray-600 hover:text-primary after:bg-primary"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {dropdownItem.title}
@@ -233,11 +232,10 @@ const Header = () => {
                     <Link
                       href={item.href}
                       className={cn(
-                        "block py-2 font-medium transition-colors",
+                        "block py-2 font-medium transition-colors relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform",
                         activeLink === item.href
-                          ? "text-primary" 
-                          : "text-gray-700 hover:text-primary",
-                        "relative inline-block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform"
+                          ? "text-primary font-semibold after:bg-primary after:scale-x-100"
+                          : "text-gray-700 hover:text-primary after:bg-primary"
                       )}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -248,7 +246,7 @@ const Header = () => {
               ))}
               <Button
                 asChild
-                className="bg-primary hover:bg-primary/90 text-white w-full mt-2"
+                className="w-full mt-2 transition-all duration-300 bg-primary hover:bg-primary/90 text-white"
               >
                 <Link
                   href="/contact"
