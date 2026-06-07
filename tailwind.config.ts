@@ -98,7 +98,7 @@ module.exports = {
     		},
     		fontFamily: {
     			sans: [
-    				'Inter',
+    				'var(--font-outfit)',
     				'Segoe UI',
     				'Helvetica Neue',
     				'sans-serif'

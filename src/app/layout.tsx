@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import "./globals.css"
 import Script from 'next/script'
 
-const inter = Inter({ 
+const outfit = Outfit({ 
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-outfit',
 })
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.variable} antialiased min-h-screen bg-white`}>
+      <body className={`${outfit.variable} antialiased min-h-screen bg-white`}>
         {children}
       </body>
     </html>

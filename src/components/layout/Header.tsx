@@ -65,15 +65,23 @@ const Header = () => {
           : "bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+      <div 
+        className={cn(
+          "container mx-auto px-4 flex items-center justify-between transition-all duration-300",
+          isScrolled ? "py-3 lg:py-4" : "py-5 lg:py-6"
+        )}
+      >
         <Link href="/" className="flex items-center relative z-10">
           <Image
             src="/images/logo.png"
             alt="Coltium Industries Logo"
             width={0}
             height={0}
-            sizes="(max-width: 768px) 120px, 140px"
-            className="h-12 w-auto object-contain"
+            sizes="(max-width: 768px) 140px, 180px"
+            className={cn(
+              "w-auto object-contain transition-all duration-300",
+              isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-16"
+            )}
             priority
           />
         </Link>
