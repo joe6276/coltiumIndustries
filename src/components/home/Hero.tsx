@@ -7,7 +7,7 @@ import ParticleMesh from './ParticleMesh'
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[750px] lg:min-h-[900px] flex items-center bg-gradient-to-br from-primary via-primary/95 to-slate-900 overflow-hidden pt-12">
+    <section className="relative flex min-h-[680px] items-center overflow-hidden bg-gradient-to-br from-[#061735] via-[#11264D] to-[#020817] pt-12 lg:min-h-[760px] lg:items-start">
       {/* Interactive Background Particle Mesh of Africa */}
       <ParticleMesh />
 
@@ -39,20 +39,20 @@ const Hero = () => {
         />
       </div>
       
-      <div className="container mx-auto px-4 z-10 py-16 md:py-24 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="container relative z-10 mx-auto px-4 py-12 md:py-16 lg:pb-20 lg:pt-28">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:items-start">
           {/* Left Column: Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col justify-center relative z-10"
+            className="relative z-10 flex flex-col justify-center"
           >
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 text-white leading-tight"
             >
               Where Technology Meets <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Purpose</span>
             </motion.h1>

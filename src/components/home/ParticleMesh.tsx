@@ -10,6 +10,7 @@ interface Particle {
   radius: number;
   originX: number;
   originY: number;
+  detail?: boolean;
 }
 
 export default function ParticleMesh() {
@@ -29,7 +30,8 @@ export default function ParticleMesh() {
     let animationFrameId: number;
     let particles: Particle[] = [];
     let landPoints: { x: number; y: number }[] = [];
-    const maxParticles = 140; // Dense network to make the map outline crisp
+    const maxParticles = 140; // Larger nodes that carry the main network
+    const detailParticleCount = 260; // Smaller nodes to trace borders and country lines
     const connectionDist = 45; // Connection range
     const mouseDist = 130;
     
@@ -122,7 +124,8 @@ export default function ParticleMesh() {
         return { startX, startY, scaleX, scaleY };
       } else {
         // Shift map to the right half of the screen, inside the safe height
-        const size = Math.min(w * 0.45, safeH) * 0.8;
+        // Give the desktop map more visual presence while keeping it inside the right half.
+        const size = Math.min(w * 0.52, safeH) * 0.95;
         const scaleX = size;
         const scaleY = size * (img.height / img.width);
         const startX = w * 0.5 + (w * 0.5 - scaleX) / 2;
@@ -170,6 +173,26 @@ export default function ParticleMesh() {
           radius: Math.random() * 2 + 1,
           originX: pt.x,
           originY: pt.y
+        });
+      }
+
+      // Add a second, finer layer. The source map contains the outer coastline
+      // and internal country boundaries, so sampling these pixels adds detail
+      // exactly where the map already has structure.
+      for (let i = 0; i < detailParticleCount; i++) {
+        const pt = landPoints[Math.floor(Math.random() * landPoints.length)];
+        const rx = startX + pt.x * scaleX;
+        const ry = startY + pt.y * scaleY;
+
+        particles.push({
+          x: rx,
+          y: ry,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          radius: Math.random() * 0.65 + 0.35,
+          originX: pt.x,
+          originY: pt.y,
+          detail: true
         });
       }
     };
@@ -220,14 +243,16 @@ export default function ParticleMesh() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(34, 211, 238, 0.75)"; // Cyan dots
+        ctx.fillStyle = p.detail
+          ? "rgba(103, 232, 249, 0.55)"
+          : "rgba(34, 211, 238, 0.75)";
         ctx.fill();
       });
 
-      // Draw connections
-      for (let i = 0; i < particles.length; i++) {
+      // Keep the network connections focused on the larger primary nodes.
+      for (let i = 0; i < maxParticles; i++) {
         const p1 = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
+        for (let j = i + 1; j < maxParticles; j++) {
           const p2 = particles[j];
           const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
 

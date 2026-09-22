@@ -69,7 +69,7 @@ const Header = () => {
       <div 
         className={cn(
           "container mx-auto px-4 flex items-center justify-between transition-all duration-300",
-          isScrolled ? "py-3 lg:py-4" : "py-5 lg:py-6"
+          isScrolled ? "py-2 lg:py-3" : "py-4 lg:py-4"
         )}
       >
         <Link href="/" className="flex items-center relative z-10">
@@ -81,7 +81,7 @@ const Header = () => {
             sizes="(max-width: 768px) 140px, 180px"
             className={cn(
               "w-auto object-contain transition-all duration-300",
-              isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-16"
+              isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-14"
             )}
             priority
           />
