@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Cpu, Wrench, Users, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -11,19 +12,22 @@ const cards = [
   {
     title: "Technologies",
     description: "Explore our technology stack, from embedded systems to AI and predictive analytics.",
-    icon: <Cpu className="h-8 w-8 text-primary" />,
+    imageSrc: "/images/explore-coltium/technologies.svg",
+    imageAlt: "Technology microchip illustration",
     link: "/technologies"
   },
   {
     title: "Projects",
     description: "See how we're applying technology to solve real-world problems across industries.",
-    icon: <Wrench className="h-8 w-8 text-primary" />,
+    imageSrc: "/images/explore-coltium/projects.svg",
+    imageAlt: "Project document illustration",
     link: "/projects"
   },
   {
     title: "Our Team",
     description: "Meet the engineers and strategists building Africa's technology solutions.",
-    icon: <Users className="h-8 w-8 text-primary" />,
+    imageSrc: "/images/explore-coltium/our-team.svg",
+    imageAlt: "Leadership team illustration",
     link: "/team"
   }
 ]
@@ -31,11 +35,12 @@ const cards = [
 interface LinkCardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  imageSrc: string;
+  imageAlt: string;
   link: string;
 }
 
-const LinkCard = ({ title, description, icon, link }: LinkCardProps) => {
+const LinkCard = ({ title, description, imageSrc, imageAlt, link }: LinkCardProps) => {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
@@ -52,7 +57,7 @@ const LinkCard = ({ title, description, icon, link }: LinkCardProps) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 p-8 transition-all duration-300 hover:border-primary/30 hover:bg-white hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 group flex flex-col justify-between h-full min-h-[280px]"
+      className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/70 p-8 shadow-[0_2px_7px_rgba(15,23,42,0.12),0_14px_32px_rgba(15,23,42,0.06)] transition-all duration-300 hover:border-primary/30 hover:bg-white hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(15,23,42,0.12),0_22px_44px_rgba(15,23,42,0.1)] group flex flex-col justify-between h-full min-h-[280px]"
     >
       {/* Glow Effect */}
       <div
@@ -63,8 +68,14 @@ const LinkCard = ({ title, description, icon, link }: LinkCardProps) => {
       />
 
       <div>
-        <div className="flex items-center justify-center h-14 w-14 rounded-xl mb-6 transition-all duration-300 group-hover:scale-105 w-fit border bg-primary/5 border-primary/10">
-          {icon}
+        <div className="flex items-center justify-center h-14 w-14 rounded-xl mb-6 transition-all duration-300 group-hover:scale-105 border bg-white border-slate-200 shadow-[0_1px_3px_rgba(15,23,42,0.05)]">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            width={42}
+            height={42}
+            className="h-9 w-9 object-contain"
+          />
         </div>
         <h3 className="text-2xl font-bold text-primary mb-3 group-hover:text-primary/90 transition-colors duration-300">{title}</h3>
         <p className="text-slate-600 text-[15px] leading-relaxed mb-6">{description}</p>
@@ -117,7 +128,8 @@ const QuickLinks = () => {
               <LinkCard
                 title={card.title}
                 description={card.description}
-                icon={card.icon}
+                imageSrc={card.imageSrc}
+                imageAlt={card.imageAlt}
                 link={card.link}
               />
             </motion.div>
