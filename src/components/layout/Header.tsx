@@ -29,7 +29,7 @@ const Header = () => {
       dropdown: [
         { title: "Embedded Systems", href: "/technologies#embedded-systems" },
         { title: "AI & ML", href: "/technologies#artificial-intelligence" },
-        { title: "ASIC & FPGA Design", href: "/technologies#chip-design" },
+        { title: "FPGA & ASIC", href: "/fpga-asic" },
         { title: "IoT & Connectivity", href: "/technologies#iot-connectivity" },
         { title: "Space Navigation", href: "/technologies#space-navigation" },
         { title: "Sports Technology", href: "/technologies#sports-technology" }
