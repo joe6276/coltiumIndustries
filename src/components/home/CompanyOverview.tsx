@@ -89,7 +89,7 @@ const CompanyOverview = () => {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
           {/* Card 1: Embedded Systems (spans 4/6 on desktop) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

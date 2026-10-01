@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Form,
@@ -22,6 +22,9 @@ const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   organization: z.string().optional(),
   email: z.string().email("Please enter a valid email address"),
+  serviceInterest: z.string().optional(),
+  projectStage: z.string().optional(),
+  existingMaterials: z.string().optional(),
   message: z.string().min(10, "Message must be at least 10 characters"),
 })
 
@@ -36,19 +39,42 @@ const ContactForm = () => {
       name: "",
       organization: "",
       email: "",
+      serviceInterest: "",
+      projectStage: "",
+      existingMaterials: "",
       message: ""
     }
   })
+  const { setValue } = form
+
+  useEffect(() => {
+    const service = new URLSearchParams(window.location.search).get('service')
+    if (service === 'fpga-asic') {
+      setValue('serviceInterest', 'FPGA / SoC / ASIC engineering')
+    }
+  }, [setValue])
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true)
     try {
+      const projectContext = [
+        values.serviceInterest ? `Project area: ${values.serviceInterest}` : '',
+        values.projectStage ? `Current stage: ${values.projectStage}` : '',
+        values.existingMaterials ? `Existing materials: ${values.existingMaterials}` : '',
+      ].filter(Boolean).join('\n')
+      const message = [projectContext, values.message].filter(Boolean).join('\n\n')
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          name: values.name,
+          organization: values.organization,
+          email: values.email,
+          message,
+        }),
       })
 
       const data = await response.json()
@@ -120,6 +146,76 @@ const ContactForm = () => {
                 <FormLabel>Email <span className="text-red-500">*</span></FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="Your email address" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="border-t border-slate-200 pt-6">
+            <h3 className="text-lg font-semibold text-primary">Project details <span className="text-sm font-normal text-slate-500">(optional)</span></h3>
+            <p className="mt-1 text-sm text-slate-600">These details help us understand technical enquiries. Leave them blank if they are not relevant.</p>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="serviceInterest"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>What area is your enquiry about?</FormLabel>
+                <FormControl>
+                  <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="">Choose if known</option>
+                    <option value="FPGA / SoC / ASIC engineering">FPGA, SoC or ASIC engineering</option>
+                    <option value="FPGA design or prototype">FPGA design or prototype</option>
+                    <option value="SoC integration">SoC integration</option>
+                    <option value="ASIC digital design">ASIC digital design</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                    <option value="Other / general enquiry">Other / general enquiry</option>
+                  </select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="projectStage"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Where are you in the project?</FormLabel>
+                <FormControl>
+                  <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="">Choose if known</option>
+                    <option value="Early idea or requirements">Early idea or requirements</option>
+                    <option value="Architecture">Architecture</option>
+                    <option value="RTL or IP in progress">RTL or IP in progress</option>
+                    <option value="FPGA board prototype">FPGA board prototype</option>
+                    <option value="ASIC digital design planning">ASIC digital design planning</option>
+                    <option value="Other / unsure">Other / unsure</option>
+                  </select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="existingMaterials"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>What do you already have?</FormLabel>
+                <FormControl>
+                  <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="">Choose if relevant</option>
+                    <option value="Starting from scratch">Starting from scratch</option>
+                    <option value="Requirements or architecture documents">Requirements or architecture documents</option>
+                    <option value="Existing RTL or IP">Existing RTL or IP</option>
+                    <option value="FPGA prototype or hardware">FPGA prototype or hardware</option>
+                    <option value="Other / unsure">Other / unsure</option>
+                  </select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

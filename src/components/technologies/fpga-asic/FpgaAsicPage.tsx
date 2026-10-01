@@ -19,25 +19,29 @@ const buildOptions = [
     id: 'fpga',
     title: 'FPGA',
     icon: Cpu,
-    description: 'Real-time logic, acceleration, interfaces and deterministic control.',
+    description: 'A reconfigurable chip for custom hardware that can be updated after manufacturing.',
+    bestFor: 'Prototypes, low-latency processing, or products whose hardware may need to change.',
   },
   {
     id: 'soc',
     title: 'SoC',
     icon: Layers,
-    description: 'Integrated processors, programmable logic, memory and embedded systems.',
+    description: 'A system-on-chip combines a processor, interfaces and other system components in one chip.',
+    bestFor: 'Products that need a processor working closely with custom logic and peripherals.',
   },
   {
     id: 'asic',
     title: 'ASIC',
     icon: Cpu,
-    description: 'Custom digital IP, subsystems and silicon architectures.',
+    description: 'A custom, fixed circuit designed for a particular product or task.',
+    bestFor: 'A stable design with specific performance, power, size or production goals.',
   },
   {
     id: 'unsure',
     title: 'Not sure yet?',
     icon: Lightbulb,
-    description: 'Bring us the requirement. We’ll help architect the path.',
+    description: 'Start with the problem you need to solve; the hardware choice can come later.',
+    bestFor: 'Teams comparing approaches or shaping an early idea into a hardware plan.',
   },
 ]
 
@@ -54,7 +58,7 @@ const designStages = [
   },
   {
     name: 'RTL / IP',
-    detail: 'Develop synthesizable digital logic, reusable IP and interfaces for the intended hardware platform.',
+    detail: 'Describe the digital circuit in Verilog or SystemVerilog, then build reusable hardware blocks and interfaces for the target platform.',
     tags: ['Verilog', 'SystemVerilog', 'VHDL', 'AXI'],
   },
   {
@@ -64,45 +68,53 @@ const designStages = [
   },
   {
     name: 'Implement',
-    detail: 'Synthesize, apply constraints and optimize the design through implementation and timing closure.',
+    detail: 'Map the design to hardware, apply timing constraints, and make sure circuit operations meet their clock deadlines.',
     tags: ['Synthesis', 'Constraints', 'Optimization', 'Timing closure'],
   },
   {
     name: 'FPGA / SoC / ASIC',
-    detail: 'Prototype, deploy or integrate the design, and advance the digital hardware toward its next development stage.',
+    detail: 'Implement and validate an FPGA or SoC design, or prepare ASIC digital logic for its next development stage.',
     tags: ['Prototype', 'Deploy', 'Integrate', 'Advance'],
   },
 ]
 
 const capabilities = [
-  { name: 'RTL / IP', text: 'Custom digital logic, controllers, interfaces and reusable IP.' },
+  { name: 'RTL / IP', text: 'RTL is a text description of a digital circuit; IP is a reusable hardware block such as a controller or interface.' },
   { name: 'Verification', text: 'Testbenches, assertions, simulation and functional validation.' },
-  { name: 'Timing', text: 'Constraints, CDC / RDC, static timing analysis and closure.' },
+  { name: 'Timing', text: 'Clock constraints and analysis to confirm signals arrive in time for the next operation.' },
   { name: 'DSP / Data', text: 'Sampling, streaming, signal processing and high-throughput datapaths.' },
   { name: 'SoC Design', text: 'CPU and programmable logic, buses, memory and subsystem integration.' },
   { name: 'Embedded', text: 'Interrupts, DMA, firmware interfaces and hardware/software integration.' },
   { name: 'FPGA', text: 'Architecture through implementation, bring-up and optimization.' },
-  { name: 'ASIC', text: 'Digital architecture, RTL, verification and silicon-development path.' },
+  { name: 'ASIC', text: 'Digital architecture, RTL, verification and implementation planning for custom chips.' },
 ]
 
 const engineeringProjects = [
   {
     title: 'Deterministic Event & Control Engine',
+    summary: 'Synchronizes incoming events and turns them into predictable control outputs.',
+    evidence: 'The provided project details list 125 MHz and timing verification.',
     tags: ['125 MHz', 'RTL', 'Synchronization', 'Timing verified'],
     href: 'https://github.com/franksombudsman-ops/fpga-rtl-portfolio/tree/main/projects/zcu104/01-deterministic-event-control-engine',
   },
   {
     title: 'Real-Time Sensor-Actuator Engine',
+    summary: 'Reads sensor data over SPI and produces control outputs on a regular schedule.',
+    evidence: 'The portfolio lists SPI and a 10 kHz sampling rate.',
     tags: ['SPI', '10 kHz sampling', 'Real-time RTL', 'Control'],
     href: 'https://github.com/franksombudsman-ops/fpga-rtl-portfolio/tree/main/projects/zcu104/02-real-time-sensor-actuator-engine',
   },
   {
     title: 'AXI-Lite Control Peripheral',
+    summary: 'Lets processor software read and update hardware control and status registers.',
+    evidence: 'Demonstrates custom AXI4-Lite IP for SoC integration.',
     tags: ['AXI4-Lite', 'Custom IP', 'Registers', 'SoC integration'],
     href: 'https://github.com/franksombudsman-ops/fpga-rtl-portfolio/tree/main/projects/zcu104/03-axi-lite-control-peripheral',
   },
   {
     title: 'Interrupt-Driven Control SoC',
+    summary: 'Connects processor software with FPGA logic, sensors and interrupt-driven control.',
+    evidence: 'Demonstrates CPU and FPGA coordination with sensor interfaces.',
     tags: ['CPU + FPGA', 'Interrupts', 'Sensors', 'Embedded control'],
     href: 'https://github.com/franksombudsman-ops/fpga-rtl-portfolio/tree/feat/zcu104-interrupt-driven-soc-control/projects/zcu104/04-interrupt-driven-soc-control',
   },
@@ -215,7 +227,7 @@ function HardwareVisual() {
 
 function FpgaAsicPage() {
   const [selectedBuild, setSelectedBuild] = useState(buildOptions[0].id)
-  const [selectedStage, setSelectedStage] = useState(1)
+  const [selectedStage, setSelectedStage] = useState(0)
   const [selectedCapability, setSelectedCapability] = useState(0)
   const currentBuild = buildOptions.find((item) => item.id === selectedBuild) ?? buildOptions[0]
   const currentStage = designStages[selectedStage]
@@ -236,10 +248,13 @@ function FpgaAsicPage() {
               </h1>
               <p className="mt-6 text-2xl font-medium text-slate-100 sm:text-3xl">From idea to digital hardware.</p>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
-                Architecture <span className="text-cyan-400">·</span> RTL <span className="text-cyan-400">·</span> Verification <span className="text-cyan-400">·</span> Implementation <span className="text-cyan-400">·</span> Silicon
+                We help teams design and validate the digital hardware inside products—from reconfigurable FPGA prototypes to SoC integration and custom ASIC logic.
+              </p>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
+                Architecture <span className="text-cyan-400">·</span> Digital circuit design <span className="text-cyan-400">·</span> Verification <span className="text-cyan-400">·</span> FPGA / SoC implementation <span className="text-cyan-400">·</span> ASIC design support
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Link href="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-6 py-3 font-bold text-slate-950 transition-colors hover:bg-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+                <Link href="/contact?service=fpga-asic" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-6 py-3 font-bold text-slate-950 transition-colors hover:bg-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
                   Discuss your project <ArrowRight size={18} />
                 </Link>
                 <Link href="#engineering-work" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-slate-500/70 bg-slate-900/30 px-6 py-3 font-semibold text-white transition-colors hover:border-cyan-300 hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
@@ -259,7 +274,7 @@ function FpgaAsicPage() {
 
         <section aria-labelledby="build-title" className="bg-white py-20 md:py-24">
           <div className="container mx-auto px-4">
-            <SectionHeading id="build-title" eyebrow="Start with the outcome" title="What are you building?" body="Choose a direction or bring us the requirement. We can help shape the right hardware path." />
+            <SectionHeading id="build-title" eyebrow="Start with the outcome" title="What are you building?" body="These options describe different hardware approaches. Choose one to see when it may be a good fit, or tell us about the problem first." />
             <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {buildOptions.map((option) => {
                 const Icon = option.icon
@@ -274,9 +289,10 @@ function FpgaAsicPage() {
               })}
             </div>
             <div className="mx-auto mt-6 flex max-w-6xl flex-col items-start justify-between gap-4 rounded-xl border border-cyan-100 bg-cyan-50/70 p-5 sm:flex-row sm:items-center">
-              <p aria-live="polite" className="text-sm text-slate-700"><span className="font-semibold text-slate-950">Selected: {currentBuild.title}.</span> {currentBuild.description}</p>
-              <Link href="/contact" className="inline-flex shrink-0 items-center gap-2 font-semibold text-cyan-800 hover:text-cyan-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700">Start a conversation <ArrowRight size={16} /></Link>
+              <p aria-live="polite" className="text-sm leading-relaxed text-slate-700"><span className="font-semibold text-slate-950">{currentBuild.id === 'unsure' ? 'Not sure? Start here:' : `${currentBuild.title} can be a good fit when:`}</span> {currentBuild.bestFor}</p>
+              <Link href="/contact?service=fpga-asic" className="inline-flex shrink-0 items-center gap-2 font-semibold text-cyan-800 hover:text-cyan-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700">Start a conversation <ArrowRight size={16} /></Link>
             </div>
+            <p className="mx-auto mt-3 max-w-6xl text-sm leading-relaxed text-slate-500">ASIC design covers the digital circuit and its verification; manufacturing the physical chip is a separate stage.</p>
           </div>
         </section>
 
@@ -352,15 +368,18 @@ function FpgaAsicPage() {
                   </div>
                   <h3 className="max-w-lg text-xl font-bold leading-snug text-slate-950 md:text-2xl">{project.title}</h3>
                   <div className="mt-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700">{tag}</span>)}
+                    {project.tags.map((tag) => <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[13px] font-medium text-slate-700">{tag}</span>)}
                   </div>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-700">{project.summary}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{project.evidence}</p>
                   <Link href={project.href} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-7 text-sm font-bold text-cyan-800 hover:text-cyan-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700">
-                    View project <ExternalLink size={15} aria-hidden="true" />
+                    View design and available evidence <ExternalLink size={15} aria-hidden="true" />
                     <span className="sr-only">(opens in a new tab)</span>
                   </Link>
                 </article>
               ))}
             </div>
+            <p className="mx-auto mt-5 max-w-6xl text-center text-sm text-slate-500">Each link opens the project repository, where source code and the available design and verification artifacts can be explored.</p>
             <div className="mt-9 text-center">
               <Link href="https://github.com/franksombudsman-ops/fpga-rtl-portfolio" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-800 transition-colors hover:border-cyan-600 hover:text-cyan-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-700">
                 Explore engineering portfolio <ArrowUpRight size={17} />
@@ -375,8 +394,8 @@ function FpgaAsicPage() {
             <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-300/30 bg-cyan-300/10 text-cyan-300"><Check size={23} /></span>
             <p className="mt-6 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Coltium digital hardware</p>
             <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Have a digital hardware problem?</h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-slate-300">Bring the requirement, architecture, existing RTL or prototype. Coltium Engineering can help take it forward.</p>
-            <Link href="/contact" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-7 py-3 font-bold text-slate-950 transition-colors hover:bg-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-slate-300">Whether you have an early idea, an existing RTL design or a board prototype, tell us where you are and what you need to do next.</p>
+            <Link href="/contact?service=fpga-asic" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-7 py-3 font-bold text-slate-950 transition-colors hover:bg-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
               Talk to Coltium Engineering <ArrowRight size={18} />
             </Link>
           </div>
