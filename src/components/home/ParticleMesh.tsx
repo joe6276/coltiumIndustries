@@ -13,7 +13,7 @@ interface Particle {
   detail?: boolean;
 }
 
-export default function ParticleMesh() {
+export default function ParticleMesh({ paused = false }: { paused?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
@@ -97,9 +97,8 @@ export default function ParticleMesh() {
 
     const resizeCanvas = () => {
       if (!canvas || !container) return;
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
       if (landPoints.length > 0) {
         initParticles();
       }
@@ -282,18 +281,18 @@ export default function ParticleMesh() {
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      if (!paused) animationFrameId = requestAnimationFrame(animate);
     };
 
     // Attach hover listener to window so it is captured transparently 
     // even though the canvas has pointer-events-none.
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = (e.clientX - rect.left) * canvas.width / rect.width;
+      const y = (e.clientY - rect.top) * canvas.height / rect.height;
 
       // Only activate when cursor is within the Hero container bounds
-      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+      if (x >= 0 && x <= canvas.width && y >= 0 && y <= canvas.height) {
         mouseRef.current.x = x;
         mouseRef.current.y = y;
         mouseRef.current.active = true;
@@ -306,6 +305,8 @@ export default function ParticleMesh() {
       mouseRef.current.active = false;
     };
 
+    const resizeObserver = new ResizeObserver(resizeCanvas);
+    resizeObserver.observe(container);
     window.addEventListener("resize", resizeCanvas);
     window.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);
@@ -313,6 +314,7 @@ export default function ParticleMesh() {
     animate();
 
     return () => {
+      resizeObserver.disconnect();
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
       if (container) {
@@ -320,7 +322,7 @@ export default function ParticleMesh() {
       }
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [paused]);
 
   return (
     <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none bg-transparent overflow-hidden">

@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import { motion } from 'framer-motion'
 
 const ImpactStatement = () => {
   return (
@@ -42,25 +41,17 @@ const ImpactStatement = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+        <div
           className="max-w-5xl mx-auto text-center"
         >
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold mb-8 leading-[1.15] text-white tracking-tight">
             We're not just engineers. We're <span className="bg-gradient-to-r from-blue-300 via-blue-100 to-blue-200 bg-clip-text text-transparent drop-shadow-sm">solution architects</span> for Africa's most pressing challenges.
           </h2>
 
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 120 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="h-1 bg-gradient-to-r from-blue-400 to-blue-200 mx-auto rounded-full mt-10"
-          ></motion.div>
-        </motion.div>
+          <div
+            className="w-[120px] h-1 bg-gradient-to-r from-blue-400 to-blue-200 mx-auto rounded-full mt-10"
+          ></div>
+        </div>
       </div>
     </section>
   )

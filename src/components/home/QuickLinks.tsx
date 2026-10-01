@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -69,7 +68,7 @@ const LinkCard = ({ title, description, imageSrc, imageAlt, link }: LinkCardProp
 
       <div>
         <div className="flex items-center justify-center h-14 w-14 rounded-xl mb-6 transition-all duration-300 group-hover:scale-105 border bg-white border-slate-200 shadow-[0_1px_3px_rgba(15,23,42,0.05)]">
-          <Image
+          <Image loading="eager"
             src={imageSrc}
             alt={imageAlt}
             width={42}
@@ -101,11 +100,7 @@ const QuickLinks = () => {
   return (
     <section className="py-20 md:py-28 bg-white relative border-t border-slate-100">
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="text-center mb-16 max-w-4xl mx-auto"
         >
         
@@ -113,16 +108,12 @@ const QuickLinks = () => {
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             Discover more about our technologies, active deployment projects, and the engineering team behind our solutions.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((card, index) => (
-            <motion.div
+            <div
               key={card.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               className="h-full"
             >
               <LinkCard
@@ -132,7 +123,7 @@ const QuickLinks = () => {
                 imageAlt={card.imageAlt}
                 link={card.link}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

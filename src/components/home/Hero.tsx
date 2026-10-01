@@ -1,127 +1,94 @@
-"use client"
-import React from 'react'
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { ArrowRight, Layers } from 'lucide-react'
-import ParticleMesh from './ParticleMesh'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowDown, Cpu, Database, LineChart, Server } from 'lucide-react'
+import OriginalHeroPanel from './OriginalHeroPanel'
 
-const Hero = () => {
+const cards = [
+  { image: '/images/company-overview/embedded-systems.webp', title: 'Embedded Systems', icon: Server, href: '/technologies#embedded-systems' },
+  { image: '/images/company-overview/ai-ml.webp', title: 'AI & ML', icon: Cpu, href: '/technologies#artificial-intelligence' },
+  { image: '/images/company-overview/iot-infrastructure.webp', title: 'IoT Infrastructure', icon: Database, href: '/technologies#iot-connectivity' },
+  { image: '/images/company-overview/predictive-technology.webp', title: 'Predictive Technology', icon: LineChart, href: '/technologies#predictive-systems' },
+  { image: '/images/company-overview/embedded-systems.webp', title: 'FPGA / SoC / ASIC', icon: Cpu, href: '/fpga-asic' },
+  { image: '/images/hero/cdpes-network.jpg', title: 'CDPES', icon: Database, href: '/cdpes' },
+]
+
+function CapabilityCard({ card, index, staticLayout = false }: { card: typeof cards[number]; index: number; staticLayout?: boolean }) {
+  const Icon = card.icon
   return (
-    <section className="relative flex min-h-[680px] items-center overflow-hidden bg-gradient-to-br from-[#061735] via-[#11264D] to-[#020817] pt-12 lg:min-h-[760px] lg:items-start">
-      {/* Interactive Background Particle Mesh of Africa */}
-      <ParticleMesh />
-
-      {/* Animated Glowing Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          className="absolute -right-20 -top-20 w-[500px] h-[500px] rounded-full bg-blue-400/10 blur-3xl"
-          animate={{
-            y: [0, 50, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
-        <motion.div 
-          className="absolute left-10 bottom-10 w-[400px] h-[400px] rounded-full bg-cyan-400/5 blur-3xl"
-          animate={{
-            x: [0, 40, 0],
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
+    <Link href={card.href} className={`hero-capability-card group ${staticLayout ? 'hero-capability-static' : `hero-capability-${index}`} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400`}>
+      <Image loading="eager" src={card.image} alt="" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent" />
+      <div className="relative z-10 flex items-center gap-3 p-5 xl:p-6">
+        <Icon size={22} className="shrink-0 text-cyan-200" aria-hidden="true" />
+        <h2 className="text-lg font-semibold text-white xl:text-xl">{card.title}</h2>
       </div>
-      
-      <div className="container relative z-10 mx-auto px-4 py-12 md:py-16 lg:pb-20 lg:pt-28">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:items-start">
-          {/* Left Column: Text Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 flex flex-col justify-center"
-          >
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 text-white leading-tight"
-            >
-              Where Technology Meets <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Purpose</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg md:text-xl mb-10 text-slate-200 leading-relaxed max-w-xl"
-            >
-              We build practical, advanced, and scalable technologies that solve urgent real-world problems across healthcare, energy, mobility, and infrastructure.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-5"
-            >
-              {/* Primary CTA Button with high-contrast brand blue gradient */}
-              <Link href="/technologies" className="group">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative"
-                >
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg blur opacity-40 group-hover:opacity-100 transition duration-500"></div>
-                  
-                  <div className="relative bg-gradient-to-r from-blue-600 to-primary hover:from-blue-500 hover:to-primary/95 text-white px-6 py-3.5 rounded-lg flex items-center justify-center gap-2 font-semibold shadow-lg shadow-blue-500/20 transition-all duration-300">
-                    <Layers size={18} className="transform transition-transform group-hover:scale-110 duration-300" />
-                    <span>Explore Technologies</span>
-                    <ArrowRight size={16} className="transform transition-all group-hover:translate-x-1 duration-300" />
-                  </div>
-                </motion.div>
-              </Link>
-              
-              {/* Secondary CTA Button: Clean ghost button with subtle border */}
-              <Link href="/partners" className="group">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative"
-                >
-                  <div className="relative px-6 py-3.5 rounded-lg flex items-center justify-center gap-2 text-slate-200 hover:text-white font-medium border border-slate-700/60 hover:border-slate-500/80 bg-slate-900/30 hover:bg-slate-800/40 backdrop-blur-sm transition-all duration-300">
-                    <span>Meet Our Partners</span>
-                    <ArrowRight size={16} className="transform transition-all group-hover:translate-x-1 duration-300" />
-                  </div>
-                </motion.div>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column: Empty spacer to allow the background Africa particle mesh to stand out */}
-          <div className="hidden lg:block w-full h-[400px] pointer-events-none z-0"></div>
-        </div>
-      </div>
-      
-      {/* Curved bottom section divider - connects to bg-white (#ffffff) */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-10">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full h-auto relative block" preserveAspectRatio="none">
-          <path 
-            fill="#ffffff" 
-            fillOpacity="1" 
-            d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-          ></path>
-        </svg>
-      </div>
-    </section>
+    </Link>
   )
 }
 
-export default Hero
+export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const [desktop, setDesktop] = useState(false)
+  const [motionDisabled, setMotionDisabled] = useState(false)
+  const [headerHeight, setHeaderHeight] = useState(88)
+  const [viewportHeight, setViewportHeight] = useState(900)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
+  // The whole gallery starts enlarged around its central tile. Scrolling
+  // reveals the surrounding tiles without replacing or duplicating the hero.
+  const scale = useTransform(scrollYProgress, [0, 0.72, 1], [2.12, 1, 1])
+  // Keep tile geometry fixed throughout the zoom, as in the reference.
+  // The final part of the scroll pans down the gallery to reveal its last row.
+  const galleryY = useTransform(scrollYProgress, [0, 0.72, 1], [0, 0, -(viewportHeight - headerHeight) * 0.25])
+  const radius = useTransform(scrollYProgress, [0, 0.55], [0, 12])
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)')
+    const update = () => setDesktop(query.matches)
+    update()
+    const updateHeight = () => setViewportHeight(window.innerHeight)
+    updateHeight()
+    window.addEventListener('resize', updateHeight)
+    query.addEventListener('change', update)
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updateMotion = () => setMotionDisabled(motionQuery.matches)
+    updateMotion()
+    motionQuery.addEventListener('change', updateMotion)
+    const header = sectionRef.current?.closest('.public-site')?.querySelector('header')
+    const observer = new ResizeObserver(() => {
+      if (header) setHeaderHeight(header.getBoundingClientRect().height)
+    })
+    if (header) observer.observe(header)
+    return () => { query.removeEventListener('change', update); motionQuery.removeEventListener('change', updateMotion); observer.disconnect(); window.removeEventListener('resize', updateHeight) }
+  }, [])
+
+  const animated = desktop && !reducedMotion && !motionDisabled
+
+  return (
+    <section ref={sectionRef} className={animated ? 'hero-mosaic-stage' : 'hero-mosaic-static'} style={{ '--hero-header-height': `${headerHeight}px` } as React.CSSProperties} aria-label="Coltium technology showcase">
+      {animated ? (
+        <div className="hero-mosaic-sticky">
+          <div className="hero-mosaic-position">
+            <motion.div className="hero-mosaic-grid" style={{ scale, y: galleryY }}>
+              {cards.map((card, index) => <CapabilityCard key={card.title} card={card} index={index} />)}
+              <motion.div className="hero-mosaic-main" style={{ borderRadius: radius }}>
+                <div className="hero-original-frame"><OriginalHeroPanel /></div>
+              </motion.div>
+            </motion.div>
+          </div>
+          <motion.p style={{ opacity: hintOpacity }} className="pointer-events-none absolute inset-x-0 bottom-6 flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-white">Scroll to explore <ArrowDown size={15} /></motion.p>
+        </div>
+      ) : (
+        <>
+          <OriginalHeroPanel />
+          <div className="grid gap-3 bg-white p-3 md:grid-cols-2">{cards.map((card, index) => <CapabilityCard key={card.title} card={card} index={index} staticLayout />)}</div>
+        </>
+      )}
+    </section>
+  )
+}

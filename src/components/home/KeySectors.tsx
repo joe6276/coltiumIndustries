@@ -3,7 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
 const sectors = [
@@ -62,7 +61,7 @@ const SectorCard = ({ imageSrc, imageAlt, title, description }: SectorCardProps)
   return (
     <div className="group relative flex min-h-[360px] h-full flex-col overflow-hidden rounded-[24px] border border-slate-200/90 bg-white px-8 py-8 shadow-[0_2px_7px_rgba(15,23,42,0.12),0_14px_32px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:border-slate-300 hover:shadow-[0_12px_24px_rgba(15,23,42,0.12),0_22px_44px_rgba(15,23,42,0.1)]">
       <div className="relative z-10 mb-7 flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)] transition-transform duration-300 group-hover:scale-105">
-        <Image
+        <Image loading="eager"
           src={imageSrc}
           alt={imageAlt}
           width={112}
@@ -96,11 +95,7 @@ const KeySectors = () => {
     <section className="relative border-t border-slate-100 bg-[#f2fbff] py-20 md:py-28">
       
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="mx-auto mb-16 max-w-4xl text-center"
         >
           
@@ -108,17 +103,13 @@ const KeySectors = () => {
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             We develop systems across primary industries where advanced technology can deliver structural efficiency and real-world impact.
           </p>
-        </motion.div>
+        </div>
 
         {/* Sectors Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sectors.map((sector, index) => (
-            <motion.div
+            <div
               key={sector.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               className="h-full"
             >
               <SectorCard
@@ -127,7 +118,7 @@ const KeySectors = () => {
                 title={sector.title}
                 description={sector.description}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

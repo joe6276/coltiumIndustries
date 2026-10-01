@@ -4,21 +4,15 @@ import CompanyOverview from '@/components/home/CompanyOverview'
 import KeySectors from '@/components/home/KeySectors'
 import ImpactStatement from '@/components/home/ImpactStatement'
 import QuickLinks from '@/components/home/QuickLinks'
-import { EngineeringHighlight, FeaturedProject, ProductHighlights, PartnerHighlights, ProjectEnquiry } from '@/components/home/HomeHighlights'
 
 export default function HomePage() {
   return (
     <>
       <Hero />
       <CompanyOverview />
-      <EngineeringHighlight />
-      <FeaturedProject />
-      <ProductHighlights />
       <KeySectors />
-      <PartnerHighlights />
       <ImpactStatement />
       <QuickLinks />
-      <ProjectEnquiry />
     </>
   )
 }
