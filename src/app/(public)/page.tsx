@@ -2,8 +2,8 @@ import React from 'react'
 import Hero from '@/components/home/Hero'
 import CompanyOverview from '@/components/home/CompanyOverview'
 import KeySectors from '@/components/home/KeySectors'
-import ImpactStatement from '@/components/home/ImpactStatement'
 import QuickLinks from '@/components/home/QuickLinks'
+import Testimonials from '@/components/home/Testimonials'
 import { EngineeringHighlight, FeaturedProject, ProductHighlights, PartnerHighlights, ProjectEnquiry } from '@/components/home/HomeHighlights'
 
 export default function HomePage() {
@@ -16,7 +16,7 @@ export default function HomePage() {
       <ProductHighlights />
       <KeySectors />
       <PartnerHighlights />
-      <ImpactStatement />
+      <Testimonials />
       <QuickLinks />
       <ProjectEnquiry />
     </>
