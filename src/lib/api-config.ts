@@ -41,7 +41,7 @@ import {
   TokenizationRequest, TokenizationApiResponse
 } from '@/lib/types/api'
 
-export const API_BASE_URL = 'https://coltiumbackend-h7gtaphsdwg0djgm.canadacentral-01.azurewebsites.net'
+export const API_BASE_URL = 'https://coltium-api.frankotieno254.workers.dev'
 export const MPESA_API_BASE_URL = 'https://coltiummpesa-avfca5fhahg9fwah.canadacentral-01.azurewebsites.net'
 export const TOKENIZATION_API_URL = 'https://thetokenizer-2.onrender.com'
 
